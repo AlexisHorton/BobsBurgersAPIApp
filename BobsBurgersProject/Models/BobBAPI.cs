@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace BobsBurgersProject.Models
                 if (_realClient == null)
                 {
                     _realClient = new HttpClient();
-                    _realClient.BaseAddress = new Uri("https://bobsburgers-api.herokuapp.com/"); 
+                    _realClient.BaseAddress = new Uri("https://bobsburgers-api.herokuapp.com/");
                 }
                 return _realClient;
             }
@@ -43,13 +44,30 @@ namespace BobsBurgersProject.Models
             // Or For username/password, use the following:
             // optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=efconsole1;User Id=sa;Password=abc123;");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var converter = new ValueConverter<string[], string>(
+            x => string.Join(";", x),
+            x => x.Split(';', StringSplitOptions.RemoveEmptyEntries));
+
+            modelBuilder
+                .Entity<BurgerofTheDay>()
+                .Property(e => e.Burgers)//Property
+                .HasConversion(converter);
+            
+            modelBuilder
+                .Entity<Characters>()
+                .Property(e => e.Relatives)//Property
+                .HasConversion(converter);
+        }
     }
 
     public class BBDatabase
     {
-        public static bool AddtoCharacterDb( Characters character)
+        public static bool AddtoCharacterDb(Characters character)
         {
-            using(BobsBContext bctx = new BobsBContext())
+            using (BobsBContext bctx = new BobsBContext())
             {
                 List<Characters> allcharacters = bctx.Characters.Where(c => c.Id == character.Id).ToList();
                 if (allcharacters.Count > 0)

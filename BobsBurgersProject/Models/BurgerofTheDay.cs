@@ -9,7 +9,7 @@ namespace BobsBurgersProject.Models
     {
 
         public int Id { get; set; }
-        public List<string> Burgers { get; set; }
+        public string[] Burgers { get; set; }
         public string Price { get; set; }
         public int Season { get; set; }
         public string episodeUrl { get; set; }

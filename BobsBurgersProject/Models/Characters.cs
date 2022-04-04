@@ -14,7 +14,7 @@ namespace BobsBurgersProject.Models
         public string HairColor { get; set; }
         public string Gender { get; set; }
         public string Occupation { get; set; }
-        public List<string> Relatives { get; set; }
+        public string[] Relatives { get; set; }
         public string FirstEpisode { get; set; }
         public string VoicedBy { get; set; }
     }

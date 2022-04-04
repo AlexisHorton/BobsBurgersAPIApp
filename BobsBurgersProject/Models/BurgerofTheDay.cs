@@ -7,13 +7,11 @@ namespace BobsBurgersProject.Models
 {
     public class BurgerofTheDay
     {
- 
-            public int id { get; set; }
-            public string[] burgers { get; set; }
-            public string price { get; set; }
-            public int season { get; set; }
-            public int episode { get; set; }
-            public string episodeUrl { get; set; }
-            public string url { get; set; }
+
+        public int Id { get; set; }
+        public List<string> Burgers { get; set; }
+        public string Price { get; set; }
+        public int Season { get; set; }
+        public string episodeUrl { get; set; }
     }
 }
